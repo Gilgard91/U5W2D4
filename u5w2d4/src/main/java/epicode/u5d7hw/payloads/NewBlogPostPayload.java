@@ -1,13 +1,14 @@
 package epicode.u5d7hw.payloads;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public class NewBlogPostPayload {
-    @NotEmpty(message = "L'ID è obbligatorio!")
+    @NotNull(message = "L'ID è obbligatorio!")
     private int authorId;
     @NotEmpty(message = "Il titolo è obbligatorio!")
     private String title;
@@ -15,7 +16,7 @@ public class NewBlogPostPayload {
     private String category;
     @NotEmpty(message = "Il contenuto è obbligatorio!")
     private String content;
-    @NotEmpty(message = "Il reading time è obbligatorio!")
+    @NotNull(message = "Il reading time è obbligatorio!")
     private double readingTime;
     private String coverURL;
 

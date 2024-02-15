@@ -1,11 +1,14 @@
 package epicode.u5d7hw.controllers;
 
 import epicode.u5d7hw.entities.Blogpost;
+import epicode.u5d7hw.exceptions.BadRequestException;
 import epicode.u5d7hw.payloads.NewBlogPostPayload;
 import epicode.u5d7hw.services.BlogsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,8 +23,11 @@ public class BlogsController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Blogpost saveBlog(@RequestBody NewBlogPostPayload body) {
-        return blogsService.save(body);
+    public Blogpost saveBlog(@RequestBody @Validated NewBlogPostPayload body, BindingResult validation) {
+        if(validation.hasErrors()){
+            throw new BadRequestException(validation.getAllErrors());
+        }
+        return this.blogsService.save(body);
     }
 
 
